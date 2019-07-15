@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
-import LogicPagination from "./LogicPagination";
+// import LogicPagination from "./LogicPagination";
+import HeroCards from "../HeroCards";
 
 class Pagination extends Component {
     constructor() {
@@ -21,21 +22,12 @@ class Pagination extends Component {
 
     render() {
         const { results, currentPage, cardsPerPage } = this.state;
-
-        // Displaying current results
-        const rangeForPage = currentPage * cardsPerPage;
-        const firstNextResult = rangeForPage - cardsPerPage;
-        const currentTodos = results.slice(firstNextResult, rangeForPage);
-
-        const renderTodos = currentTodos.map((todo, index) => {
-            return <li key={index} className="list">{todo}</li>;
-        });
-
         // Logic for displaying page numbers
         const pageNumbers = [];
         for (let i = 1; i <= Math.ceil(results.length / cardsPerPage); i++) {
             pageNumbers.push(i);
         }
+        
         const renderPageNumbers = pageNumbers.map(number => {
             return (
                 <li
@@ -51,7 +43,11 @@ class Pagination extends Component {
         return (
             <div>
                 <ul>
-                    {renderTodos}
+                    {<HeroCards 
+                        allItems={results}
+                        currentView={currentPage}
+                        cardsPerPage={cardsPerPage}
+                    />}
                 </ul>
                 <ul id="page-numbers">
                     {renderPageNumbers}
